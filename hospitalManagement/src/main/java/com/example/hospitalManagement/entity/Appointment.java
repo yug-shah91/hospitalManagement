@@ -2,6 +2,7 @@ package com.example.hospitalManagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.sql.results.graph.Fetch;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ public class Appointment {
     @Column(length = 200)
     private String reason;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id",nullable = false)//patient is req and not nullable
     private Patient patient;
 

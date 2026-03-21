@@ -55,7 +55,7 @@ public class Patient {
     @JoinColumn(name = "patient_insurance_id") // owning side
     private Insurance insurance;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true) // non owning side still cascade
     private List<Appointment> appointments;
 }
 //Why use {} ?
