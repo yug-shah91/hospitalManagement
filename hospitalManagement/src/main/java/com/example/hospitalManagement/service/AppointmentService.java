@@ -20,7 +20,7 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
 
     @Transactional
-    public Appointment createNewApoointment(Appointment appointment , Long patientId,Long doctorId){
+    public Appointment createNewAppointment(Appointment appointment , Long patientId,Long doctorId){
 
         Doctor doctor= doctorRepository.findById(doctorId)
                 .orElseThrow();
@@ -39,5 +39,18 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
 
 
+    }
+
+    @Transactional
+    public Appointment reAssignAppointmentToAnotherDoctor(Long appointmentId , Long doctorId){
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow();
+        Doctor doctor= doctorRepository.findById(doctorId)
+                .orElseThrow();
+
+        appointment.setDoctor(doctor); // this will automatically call the update because it is dirty now
+
+        doctor.getAppointments().add(appointment);
+        return appointment;
     }
 }

@@ -25,5 +25,8 @@ public class InsuranceTest {
 
         Patient patient = insuranceService.assignInsuranceToPatient(insurance,1L); // Call Service // Controller/Test should call Service, NOT Repository
         System.out.println(patient);
+
+         var newPatient =   insuranceService.dissassociateInsuranceFromPatient(patient.getId());
+        System.out.println(newPatient);
     }
 }

@@ -22,9 +22,13 @@ public class AppointmentTest {
                 .reason("liver")
                 .build();
 
-       var newApoointment= appointmentService.createNewApoointment(appointment,1L,2L);
+       var newApoointment= appointmentService.createNewAppointment(appointment,1L,2L);
 
         System.out.println(newApoointment);
+
+        var updateAppointment=appointmentService.reAssignAppointmentToAnotherDoctor(newApoointment.getId(),3L);
+
+        System.out.println(updateAppointment);
     }
 
 }
