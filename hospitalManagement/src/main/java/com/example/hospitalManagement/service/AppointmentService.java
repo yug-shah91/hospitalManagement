@@ -30,17 +30,13 @@ public class AppointmentService {
 
         if (appointment.getId()!=null) throw new IllegalArgumentException("Appointment should not have");
 
-
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
 
         patient.getAppointments().add(appointment);
 
         return appointmentRepository.save(appointment);
-
-
     }
-
     @Transactional
     public Appointment reAssignAppointmentToAnotherDoctor(Long appointmentId , Long doctorId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
