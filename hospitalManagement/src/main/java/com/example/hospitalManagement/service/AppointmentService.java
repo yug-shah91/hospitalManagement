@@ -1,5 +1,7 @@
 package com.example.hospitalManagement.service;
 
+import com.example.hospitalManagement.dto.AppointmentResponseDto;
+import com.example.hospitalManagement.dto.CreateAppointmentRequestDto;
 import com.example.hospitalManagement.entity.Appointment;
 import com.example.hospitalManagement.entity.Doctor;
 import com.example.hospitalManagement.entity.Patient;
@@ -9,7 +11,12 @@ import com.example.hospitalManagement.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +25,7 @@ public class AppointmentService {
     private final PatientRepository patientRepository;
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public Appointment createNewAppointment(Appointment appointment , Long patientId,Long doctorId){
@@ -48,5 +56,30 @@ public class AppointmentService {
 
         doctor.getAppointments().add(appointment);
         return appointment;
+    }
+
+    public List<AppointmentResponseDto> getAllAppointmentsOfDoctor(Long doctorId) {
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
+
+        return appointments.stream()
+                .map(appointment -> modelMapper.map(appointment, AppointmentResponseDto.class))
+                .toList();
+    }
+
+    public AppointmentResponseDto createNewAppointment(CreateAppointmentRequestDto requestDto) {
+        // 1. Convert the Request DTO into an Appointment Entity
+        Appointment appointment = modelMapper.map(requestDto, Appointment.class);
+
+        // 2. Fetch related entities (assuming your DTO has doctorId and patientId)
+        // Doctor doctor = doctorRepository.findById(requestDto.getDoctorId()).orElseThrow();
+        // Patient patient = patientRepository.findById(requestDto.getPatientId()).orElseThrow();
+        // appointment.setDoctor(doctor);
+        // appointment.setPatient(patient);
+
+        // 3. Save to database
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        // 4. Return the result as a Response DTO
+        return modelMapper.map(savedAppointment, AppointmentResponseDto.class);
     }
 }
