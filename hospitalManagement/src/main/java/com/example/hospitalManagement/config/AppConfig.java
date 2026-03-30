@@ -27,4 +27,18 @@ public class AppConfig {
         return new BCryptPasswordEncoder();
     }
 
+   // @Bean
+    UserDetailsService userDetailsService(){
+        UserDetails user1= User.withUsername("admin")
+                .password(passwordEncoder().encode("1234"))
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user2= User.withUsername("patient")
+                .password(passwordEncoder().encode("1234"))
+                .roles("PATIENT")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1,user2);
+    }
 }
