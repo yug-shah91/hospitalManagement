@@ -41,4 +41,9 @@ public class AppConfig {
 
         return new InMemoryUserDetailsManager(user1,user2);
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
