@@ -44,10 +44,10 @@ public class DoctorService {
         Doctor doctor = Doctor.builder()
                 .name(onBoardDoctorRequestDto.getName())
                 .specialization(onBoardDoctorRequestDto.getSpecialization())
-              //  .user(user)
+             //   .user(user)
                 .build();
 
-     //   user.getRoles().add(RoleType.DOCTOR);
+      //  user.getRoles().add(RoleType.DOCTOR);
 
         return modelMapper.map(doctorRepository.save(doctor), DoctorResponseDto.class);
     }
