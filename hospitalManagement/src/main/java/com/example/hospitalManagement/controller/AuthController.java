@@ -2,9 +2,9 @@ package com.example.hospitalManagement.controller;
 
 import com.example.hospitalManagement.dto.LoginRequestDto;
 import com.example.hospitalManagement.dto.LoginResponseDto;
+import com.example.hospitalManagement.dto.SignUpRequestDto;
 import com.example.hospitalManagement.dto.SignupResponseDto;
-import com.example.hospitalManagement.entity.User;
-import com.example.hospitalManagement.service.AuthService;
+import com.example.hospitalManagement.security.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto>signup(@RequestBody LoginRequestDto loginRequestDto){
-        return ResponseEntity.ok(authService.signup(loginRequestDto));
+    public ResponseEntity<SignupResponseDto> signup(@RequestBody SignUpRequestDto signupRequestDto) {
+        return ResponseEntity.ok(authService.signup(signupRequestDto));
     }
 }

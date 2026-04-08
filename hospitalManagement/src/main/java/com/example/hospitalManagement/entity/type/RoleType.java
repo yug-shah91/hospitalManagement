@@ -1,6 +1,6 @@
 package com.example.hospitalManagement.entity.type;
 
-public enum RoleType {
+public enum  RoleType {
     ADMIN,
     DOCTOR,
     PATIENT

@@ -2,9 +2,7 @@ package com.example.hospitalManagement.entity;
 
 import com.example.hospitalManagement.entity.type.BloodGroupType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 
@@ -17,6 +15,7 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
+
 @Table(name = "patient",
          uniqueConstraints ={
 //       {@UniqueConstraint(name = "unique_patient_email",columnNames = {"email"}),
@@ -26,10 +25,13 @@ import java.util.List;
                 @Index(name = "idx_patient_birth_date",columnList = "birthDate")
         }
 )
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false , length = 40)
@@ -42,6 +44,10 @@ public class Patient {
     private String email;
 
     private String gender;
+
+    @OneToOne
+    @MapsId // patient ki id user ki id ke barabar
+    private User user;
 
     @Column(name="created_at", updatable = false)
     @CreationTimestamp
